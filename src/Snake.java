@@ -78,7 +78,6 @@ class Snake {
         downDirection = down;
     }
 
-    // Getter methods for x, y, and dots
     public int getX(int index) {
         return x[index];
     }
