@@ -1,7 +1,8 @@
 import javax.swing.JFrame;
 import java.awt.EventQueue;
 
-public class GameLauncher {
+
+public class main {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             JFrame frame = new JFrame("Simple Snake Game");

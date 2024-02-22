@@ -14,21 +14,20 @@ public class SnakeGame extends JPanel implements ActionListener {
     private final int HEIGHT = 500;
     private final int DOT_SIZE = 10;
     private final int ALL_DOTS = 900;
-    private final int DELAY = 100;
 
-    private Snake snake;
+    private final Snake snake;
     private Apple apple;
 
     boolean inGame = true;
     private Timer timer;
 
     public SnakeGame() {
-        snake = new Snake(ALL_DOTS, DOT_SIZE);
+        snake = new Snake(ALL_DOTS);
         apple = new Apple(DOT_SIZE);
         initBoard();
     }
 
-    private void initBoard() {
+    void initBoard() {
         setBackground(Color.black);
         setFocusable(true);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -36,6 +35,7 @@ public class SnakeGame extends JPanel implements ActionListener {
     }
 
     private void initGame() {
+        int DELAY = 100;
         timer = new Timer(DELAY, this);
         timer.start();
     }
@@ -46,6 +46,7 @@ public class SnakeGame extends JPanel implements ActionListener {
         if (inGame) {
             g.setColor(Color.red);
             g.fillOval(apple.getX(), apple.getY(), DOT_SIZE, DOT_SIZE);
+
 
             for (int z = 0; z < snake.getLength(); z++) {
                 if (z == 0) {
@@ -70,6 +71,7 @@ public class SnakeGame extends JPanel implements ActionListener {
             g.setColor(Color.white);
             g.setFont(small);
             g.drawString(msg, (WIDTH - metrics.stringWidth(msg)) / 2, HEIGHT / 2);
+            timer.stop();
         }
 
     private void checkApple() {
@@ -78,13 +80,23 @@ public class SnakeGame extends JPanel implements ActionListener {
             apple.locateApple();
         }
     }
+    public void restartGame() {
+        new Snake(ALL_DOTS);
+        apple = new Apple(DOT_SIZE);
+        inGame = true;
+        timer.start();
+        repaint();
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (inGame) {
             checkApple();
-            snake.checkCollision(WIDTH, HEIGHT);
+            inGame = !snake.checkCollision(WIDTH, HEIGHT);
             snake.move(DOT_SIZE);
+        } else {
+            timer.stop();
+            snake.reset();
         }
         repaint();
     }

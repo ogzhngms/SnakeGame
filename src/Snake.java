@@ -1,4 +1,3 @@
-import javax.swing.*;
 
 class Snake {
     private final int[] x;
@@ -11,7 +10,7 @@ class Snake {
 
 
 
-    public Snake(int allDots, int dotSize) {
+    public Snake(int allDots) {
         x = new int[allDots];
         y = new int[allDots];
         dots = 3;
@@ -39,35 +38,37 @@ class Snake {
             y[0] += DOT_SIZE;
         }
     }
-    boolean inGame = true;
-    private Timer timer;
 
 
-    void checkCollision(int WIDTH, int HEIGHT) {
-        for (int z = dots; z > 0; z--) {
+    public boolean checkCollision(int width, int height) {
+        if (x[0] < 0 || x[0] >= width || y[0] < 0 || y[0] >= height) {
+            return true;
+        }
+
+        for (int z = getLength(); z > 0; z--) {
             if ((z > 4) && (x[0] == x[z]) && (y[0] == y[z])) {
-                inGame = false;
+                return true;
             }
         }
+        return false;
+    }
+    public void reset() {
+        dots = 3;
+        leftDirection = false;
+        rightDirection = true;
+        upDirection = false;
+        downDirection = false;
 
-        if (y[0] >= HEIGHT) {
-            inGame = false;
+
+        for (int z = 0; z < dots; z++) {
+            x[z] = 50 - z * 10;
+            y[z] = 50;
         }
 
-        if (y[0] < 0) {
-            inGame = false;
-        }
 
-        if (x[0] >= WIDTH) {
-            inGame = false;
-        }
-
-        if (x[0] < 0) {
-            inGame = false;
-        }
-
-        if (!inGame) {
-            timer.stop();
+        for (int z = dots; z < dots; z++) {
+            x[z] = 0;
+            y[z] = 0;
         }
     }
 
@@ -93,4 +94,5 @@ class Snake {
     public void increaseLength() {
         dots++;
     }
+
 }

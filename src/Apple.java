@@ -1,3 +1,4 @@
+
 class Apple {
     private int x, y;
     private final int DOT_SIZE;

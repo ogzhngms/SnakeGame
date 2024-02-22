@@ -2,7 +2,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class GameControl extends KeyAdapter {
-    private SnakeGame snakeGame;
+
+    private final SnakeGame snakeGame;
 
     public GameControl(SnakeGame snakeGame) {
         this.snakeGame = snakeGame;
@@ -11,7 +12,10 @@ public class GameControl extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-
+        boolean inGame = false;
+        if (!inGame && key == KeyEvent.VK_SPACE) {
+            snakeGame.restartGame();
+        }
 
         switch (key) {
             case KeyEvent.VK_LEFT:
