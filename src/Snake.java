@@ -1,4 +1,3 @@
-
 class Snake {
     private final int[] x;
     private final int[] y;
@@ -7,9 +6,7 @@ class Snake {
     private boolean upDirection = false;
     private boolean downDirection = false;
     private int dots;
-
-
-
+    
     public Snake(int allDots) {
         x = new int[allDots];
         y = new int[allDots];
